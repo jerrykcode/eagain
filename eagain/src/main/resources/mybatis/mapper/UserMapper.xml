@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jerrykcode.eagain.mapper.UserMapper">
+    <resultMap id="userMap" type="com.jerrykcode.eagain.model.UserDetailsImpl">
+        <result column="gmt_create" property="gmtCreate" jdbcType="BIGINT"></result>
+        <result column="gmt_last_login" property="gmtLastLogin" jdbcType="BIGINT"></result>
+        <result column="account_opts" property="accountOpts" jdbcType="INTEGER"></result>
+        <result column="avatar_url" property="avatarUrl" jdbcType="VARCHAR"></result>
+    </resultMap>
+    <resultMap id="permissionMap" type="com.jerrykcode.eagain.model.Permission">
+        <result column="perm_name" property="permName" jdbcType="VARCHAR"></result>
+        <result column="perm_tag" property="permTag" jdbcType="VARCHAR"></result>
+    </resultMap>
+
+    <select id="findByUsername" resultType="com.jerrykcode.eagain.model.UserDetailsImpl" resultMap="userMap"
+        parameterType="String">
+        select * from sys_user where username = #{username};
+    </select>
+
+    <select id="findPermmissionsByUserId" resultType="com.jerrykcode.eagain.model.Permission" resultMap="permissionMap"
+        parameterType="Long">
+        select permission.* from
+        sys_user_role user_role
+        inner join sys_role_permission role_permission on user_role.role_id = role_permission.role_id
+        inner join sys_permission permission on role_permission.perm_id = permission.id
+        where user_role.user_id = #{userId}
+    </select>
+</mapper>
