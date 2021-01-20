@@ -1,5 +1,7 @@
 package com.jerrykcode.eagain.config;
 
+import com.jerrykcode.eagain.filter.JwtLoginFilter;
+import com.jerrykcode.eagain.filter.JwtValidationFilter;
 import com.jerrykcode.eagain.mapper.PermissionMapper;
 import com.jerrykcode.eagain.model.Permission;
 import com.jerrykcode.eagain.service.UserDetailsServiceImpl;
@@ -68,6 +70,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/register").permitAll()
                 .antMatchers("/**")
                 .fullyAuthenticated()
-                .and().formLogin();
+                .and()
+                .addFilter(new JwtValidationFilter(authenticationManager()))
+                .addFilter(new JwtLoginFilter(authenticationManager())).csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 }

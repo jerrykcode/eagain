@@ -1,4 +1,4 @@
-package com.jerrykcode.eagain.Controller;
+package com.jerrykcode.eagain.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
