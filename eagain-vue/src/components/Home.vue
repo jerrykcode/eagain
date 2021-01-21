@@ -1,5 +1,15 @@
 <template>
     <div>
-        <h2>Weclome to EAGAIN!</h2>
+       <Navigation></Navigation>
     </div>
 </template>
+
+<script>
+import Navigation from '@/components/Navigation'
+export default {
+    name: 'Home',
+    components: {
+        Navigation
+    }
+}
+</script>
