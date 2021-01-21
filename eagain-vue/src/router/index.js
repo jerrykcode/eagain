@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import Router from 'vue-router'
 import Home from '@/components/Home'
 import Login from '@/views/Login'
+import Register from '@/views/Register'
 
 Vue.use(Router)
 Vue.use(Vuex)
@@ -11,6 +12,7 @@ export default new Router({
   routes: [
     { path: '/', redirect: '/home' },
     { path: '/home', name: 'Home', component: Home },
-    { path: '/login', name: 'Login', component: Login }
+    { path: '/login', name: 'Login', component: Login },
+    { path: '/register', name: 'Register', component: Register }
   ]
 })

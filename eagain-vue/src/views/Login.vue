@@ -90,7 +90,7 @@
             },
            
            moveToRegister: function() {
-               //this.$router.push({path: '/register'});
+               this.$router.push({path: '/register'});
            }
         }
     }
