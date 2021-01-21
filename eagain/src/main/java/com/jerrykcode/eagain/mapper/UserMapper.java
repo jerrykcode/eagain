@@ -14,4 +14,6 @@ public interface UserMapper {
     UserDetailsImpl findByUsername(@Param("username") String username);
 
     List<Permission> findPermmissionsByUserId(@Param("userId") Long userId);
+
+    void insert(@Param("user")UserDetailsImpl user);
 }

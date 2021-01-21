@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class JwtValidationFilter extends BasicAuthenticationFilter {
@@ -42,10 +43,14 @@ public class JwtValidationFilter extends BasicAuthenticationFilter {
      * @return
      */
     private UsernamePasswordAuthenticationToken setAuthentication(String token) {
-        String username = JwtUtils.getUserName(token);
-        if (StringUtils.isEmpty(username)) {
-            return null;
+        if (StringUtils.isEmpty(token)) {
+            //没有token 就没有任何权限
+            //返回空ArrayList
+            return new UsernamePasswordAuthenticationToken(null, null, new ArrayList<SimpleGrantedAuthority>());
         }
+        String username = JwtUtils.getUserName(token);
+        if (StringUtils.isEmpty(username))
+            return null;
         List<SimpleGrantedAuthority> userRoleList = JwtUtils.getUserRole(token);
         return new UsernamePasswordAuthenticationToken(username, null, userRoleList);
     }
