@@ -57,6 +57,8 @@ export default {
             this.$router.push({path: '/login'});
         },
         logout: function() {
+            var token = localStorage.getItem("token");
+            this.$http.get("/logout", {headers:{'token':token}}).then(res=>{});
             localStorage.removeItem('token'); 
             location.reload();      
         },

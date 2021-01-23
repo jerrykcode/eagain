@@ -3,6 +3,7 @@ package com.jerrykcode.eagain;
 import com.jerrykcode.eagain.mapper.UserMapper;
 import com.jerrykcode.eagain.model.Permission;
 import com.jerrykcode.eagain.model.UserDetailsImpl;
+import com.jerrykcode.eagain.util.RedisSessionUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.util.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,9 @@ class EagainApplicationTests {
 
 	@Autowired
 	private UserMapper userMapper;
+
+	@Autowired
+	private RedisSessionUtils redisSessionUtils;
 
 	@Test
 	void findByUsername() {
@@ -44,6 +49,15 @@ class EagainApplicationTests {
 		});
 		userDetails.setAuthorities(grantedAuthorities);
 		log.info(">>user details: {}<<",userDetails);
+	}
+
+	@Test
+	void redisSession() {
+		String username = "Chtholly";
+		redisSessionUtils.addUsername(username);
+		Assert.isTrue(redisSessionUtils.usernameExists(username), "Assertion Failed");
+		redisSessionUtils.removeUsername(username);
+		Assert.isTrue( ! redisSessionUtils.usernameExists(username), "Assertion Failed");
 	}
 
 }

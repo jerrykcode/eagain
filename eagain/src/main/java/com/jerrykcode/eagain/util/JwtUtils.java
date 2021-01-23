@@ -63,8 +63,10 @@ public class JwtUtils {
      * @return
      */
     public static String getUserName(String token) {
-        Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
-        return claims.get("username").toString();
+        Claims claims = validateJwtToken(token);
+        if (claims != null)
+            return claims.get("username").toString();
+        else return null;
     }
 
     /**
@@ -74,7 +76,9 @@ public class JwtUtils {
      * @return
      */
     public static List<SimpleGrantedAuthority> getUserRole(String token) {
-        Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
+        Claims claims = validateJwtToken(token);
+        if (claims == null)
+            return null;
         List roles = (List) claims.get(ROLE_CLAIMS);
         String json = JSONArray.toJSONString(roles);
         List<SimpleGrantedAuthority>

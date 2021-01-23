@@ -3,6 +3,7 @@ package com.jerrykcode.eagain.filter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jerrykcode.eagain.model.UserDetailsImpl;
 import com.jerrykcode.eagain.util.JwtUtils;
+import com.jerrykcode.eagain.util.RedisSessionUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -21,9 +22,11 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
      * 获取授权管理
      */
     private AuthenticationManager authenticationManager;
+    private RedisSessionUtils redisSessionUtils;
 
-    public JwtLoginFilter(AuthenticationManager authenticationManager) {
+    public JwtLoginFilter(AuthenticationManager authenticationManager, RedisSessionUtils redisSessionUtils) {
         this.authenticationManager = authenticationManager;
+        this.redisSessionUtils = redisSessionUtils;
         /**
          *  后端登陆接口
          */
@@ -57,6 +60,7 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
                                             Authentication authResult) throws IOException, ServletException {
         UserDetailsImpl user = (UserDetailsImpl) authResult.getPrincipal();
         String jwtToken = JwtUtils.generateJwtToken(user);
+        redisSessionUtils.addUsername(user.getUsername());
         response.addHeader("token", jwtToken);
     }
 

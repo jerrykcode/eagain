@@ -2,11 +2,14 @@ package com.jerrykcode.eagain.config;
 
 import com.jerrykcode.eagain.filter.JwtLoginFilter;
 import com.jerrykcode.eagain.filter.JwtValidationFilter;
+import com.jerrykcode.eagain.handler.RedisLogoutHandler;
 import com.jerrykcode.eagain.mapper.PermissionMapper;
 import com.jerrykcode.eagain.model.Permission;
 import com.jerrykcode.eagain.service.UserDetailsServiceImpl;
+import com.jerrykcode.eagain.util.RedisSessionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -15,6 +18,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -28,6 +32,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private PermissionMapper permissionMapper;
+
+    @Autowired
+    private RedisSessionUtils redisSessionUtils;
+
+    @Autowired
+    private RedisLogoutHandler redisLogoutHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -71,8 +81,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**")
                 .fullyAuthenticated()
                 .and()
-                .addFilter(new JwtValidationFilter(authenticationManager()))
-                .addFilter(new JwtLoginFilter(authenticationManager())).csrf().disable()
+                .logout()
+                .addLogoutHandler(redisLogoutHandler)
+                .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler(HttpStatus.OK))
+                .and()
+                .addFilter(new JwtValidationFilter(authenticationManager(), redisSessionUtils))
+                .addFilter(new JwtLoginFilter(authenticationManager(), redisSessionUtils)).csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 }
