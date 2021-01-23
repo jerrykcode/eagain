@@ -7,7 +7,6 @@ import java.io.Serializable;
 
 @Accessors(chain = true)
 @Data
-public class RegisterResponse implements Serializable {
-    private Boolean success;
-    private Boolean usernameExists;
+public class RegisterResponse extends BaseResponse implements Serializable {
+    private String errorMessage;
 }

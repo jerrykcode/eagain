@@ -19,3 +19,11 @@ spring:
     host: 127.0.0.1
     port: 6379
     password:
+  mail:
+    username: xxx@126.com #邮箱
+    password: #开启smtp时的授权码
+    host: smtp.126.com
+    properties:
+      mail:
+        smtp:
+          auth: true

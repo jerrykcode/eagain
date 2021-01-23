@@ -5,7 +5,7 @@ import com.jerrykcode.eagain.filter.JwtValidationFilter;
 import com.jerrykcode.eagain.handler.RedisLogoutHandler;
 import com.jerrykcode.eagain.mapper.PermissionMapper;
 import com.jerrykcode.eagain.model.Permission;
-import com.jerrykcode.eagain.service.UserDetailsServiceImpl;
+import com.jerrykcode.eagain.service.impl.UserDetailsServiceImpl;
 import com.jerrykcode.eagain.util.RedisSessionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -77,6 +77,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers("/login").permitAll()
+                .antMatchers("/sendCode").permitAll()
                 .antMatchers("/register").permitAll()
                 .antMatchers("/**")
                 .fullyAuthenticated()

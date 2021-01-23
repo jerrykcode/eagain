@@ -1,4 +1,4 @@
-package com.jerrykcode.eagain.service;
+package com.jerrykcode.eagain.service.impl;
 
 import com.jerrykcode.eagain.mapper.UserMapper;
 import com.jerrykcode.eagain.model.Permission;
