@@ -9,6 +9,8 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 
+import javax.mail.internet.InternetAddress;
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
 @Service
@@ -26,7 +28,11 @@ public class MailServiceImpl implements MailService {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setSubject(subject);
         mailMessage.setText(message);
-        mailMessage.setFrom(sender);
+        try {
+            mailMessage.setFrom(String.valueOf(new InternetAddress(sender, "EAGAIN", "UTF-8")));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         mailMessage.setTo(receiver);
         mailMessage.setSentDate(new Date());
         try {
