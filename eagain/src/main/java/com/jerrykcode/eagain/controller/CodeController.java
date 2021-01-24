@@ -30,7 +30,7 @@ public class CodeController {
         for (int i = 0; i < CODE_LEN; i++) {
             code += NUMBERS.charAt(random.nextInt(10));
         }
-        String message = "您正在注册EAGAIN 验证码 " + code;
+        String message = "您正在注册EAGAIN 验证码 " + code + " 有效期5分钟";
         if (mailService.sendMail(sendCodeRequest.getEmail(), "EAGAIN邮箱验证码", message)) {
             redisMailCodeUtils.setMailAndCode(sendCodeRequest.getEmail(), code);
             return new BaseResponse().setSuccess(true);

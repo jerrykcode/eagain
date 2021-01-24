@@ -36,7 +36,8 @@ public class RegisterController {
         RegisterResponse response = new RegisterResponse();
         if (StringUtils.isEmpty(request.getUsername())
                 || StringUtils.isEmpty(request.getEmail())
-                || StringUtils.isEmpty(request.getPassword())) {
+                || StringUtils.isEmpty(request.getPassword())
+                || StringUtils.isEmpty(request.getCode())) {
             //这个分支不应该被执行
             //前端应该判断出这种错误~
             response.setSuccess(false);
