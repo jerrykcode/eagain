@@ -59,8 +59,8 @@ CREATE TABLE `sys_role_permission` (
 -- -----------------------------------
 -- 问题表
 -- ------------------------------------
-DROP TABLE IF EXISTS `questions`;
-CREATE TABLE `questions` (
+DROP TABLE IF EXISTS `question`;
+CREATE TABLE `question` (
     id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     creator_id BIGINT NOT NULL,
     title VARCHAR(100) NOT NULL,
@@ -70,4 +70,24 @@ CREATE TABLE `questions` (
     views_count INTEGER DEFAULT 0,
     likes_count INTEGER DEFAULT 0,
     focuses_count INTEGER DEFAULT 1
+);
+
+-- -----------------------------------
+-- 标签表
+-- -----------------------------------
+DROP TABLE IF EXISTS `tag`;
+CREATE TABLE `tag` (
+    id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    type VARCHAR(50) NOT NULL,
+    title VARCHAR(50) NOT NULL,
+    color VARCHAR(50) NOT NULL
+);
+
+-- -----------------------------------
+-- 问题-标签表
+-- -----------------------------------
+DROP TABLE IF EXISTS `question_tag`;
+CREATE TABLE `question_tag` (
+   question_id BIGINT NOT NULL,
+   tag_id INTEGER NOT NULL
 );

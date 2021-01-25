@@ -9,4 +9,5 @@ public class NewQuestionRequest {
     private Long creatorId;
     private String title;
     private String content;
+    private Integer[] tagIds;
 }
