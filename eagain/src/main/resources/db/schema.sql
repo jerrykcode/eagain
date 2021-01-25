@@ -54,3 +54,20 @@ CREATE TABLE `sys_role_permission` (
     role_id INTEGER NOT NULL,
     perm_id INTEGER NOT NULL
 );
+-- 以上为权限相关的表
+
+-- -----------------------------------
+-- 问题表
+-- ------------------------------------
+DROP TABLE IF EXISTS `questions`;
+CREATE TABLE `questions` (
+    id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    creator_id BIGINT NOT NULL,
+    title VARCHAR(100) NOT NULL,
+    content VARCHAR(1024) NOT NULL,
+    gmt_create BIGINT,
+    gmt_modified BIGINT,
+    views_count INTEGER DEFAULT 0,
+    likes_count INTEGER DEFAULT 0,
+    focuses_count INTEGER DEFAULT 1
+);
