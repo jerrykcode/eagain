@@ -6,7 +6,7 @@ import com.jerrykcode.eagain.handler.RedisLogoutHandler;
 import com.jerrykcode.eagain.mapper.PermissionMapper;
 import com.jerrykcode.eagain.model.Permission;
 import com.jerrykcode.eagain.service.impl.UserDetailsServiceImpl;
-import com.jerrykcode.eagain.util.RedisSessionUtils;
+import com.jerrykcode.eagain.util.redis.RedisSessionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;

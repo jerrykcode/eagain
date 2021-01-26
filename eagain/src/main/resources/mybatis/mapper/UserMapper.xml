@@ -19,6 +19,10 @@
         select * from sys_user where username = #{username};
     </select>
 
+    <select id="findById" resultType="com.jerrykcode.eagain.model.UserDetailsImpl" resultMap="userMap">
+        select * from sys_user where id = #{id}
+    </select>
+
     <select id="findPermmissionsByUserId" resultType="com.jerrykcode.eagain.model.Permission" resultMap="permissionMap"
         parameterType="Long">
         select permission.* from

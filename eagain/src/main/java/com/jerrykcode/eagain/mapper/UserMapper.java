@@ -13,6 +13,8 @@ import java.util.List;
 public interface UserMapper {
     UserDetailsImpl findByUsername(@Param("username") String username);
 
+    UserDetailsImpl findById(@Param("id") Long id);
+
     List<Permission> findPermmissionsByUserId(@Param("userId") Long userId);
 
     void insert(@Param("user")UserDetailsImpl user);

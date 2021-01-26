@@ -20,4 +20,9 @@
         values
         (#{id}, #{creatorId}, #{title}, #{content}, #{gmtCreate}, #{gmtModified})
     </insert>
+
+    <select id="queryById" resultType="com.jerrykcode.eagain.model.Question" resultMap="questionMap"
+        parameterType="java.lang.Long">
+        select * from question where id = #{id}
+    </select>
 </mapper>

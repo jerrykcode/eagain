@@ -3,7 +3,7 @@ package com.jerrykcode.eagain;
 import com.jerrykcode.eagain.mapper.UserMapper;
 import com.jerrykcode.eagain.model.Permission;
 import com.jerrykcode.eagain.model.UserDetailsImpl;
-import com.jerrykcode.eagain.util.RedisSessionUtils;
+import com.jerrykcode.eagain.util.redis.RedisSessionUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

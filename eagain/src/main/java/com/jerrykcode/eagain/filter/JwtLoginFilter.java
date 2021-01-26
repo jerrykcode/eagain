@@ -3,7 +3,7 @@ package com.jerrykcode.eagain.filter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jerrykcode.eagain.model.UserDetailsImpl;
 import com.jerrykcode.eagain.util.JwtUtils;
-import com.jerrykcode.eagain.util.RedisSessionUtils;
+import com.jerrykcode.eagain.util.redis.RedisSessionUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

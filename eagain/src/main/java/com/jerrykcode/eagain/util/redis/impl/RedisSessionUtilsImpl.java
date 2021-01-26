@@ -1,5 +1,6 @@
-package com.jerrykcode.eagain.util;
+package com.jerrykcode.eagain.util.redis.impl;
 
+import com.jerrykcode.eagain.util.redis.RedisSessionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
@@ -10,20 +11,20 @@ public class RedisSessionUtilsImpl implements RedisSessionUtils {
     @Autowired
     private RedisTemplate redisTemplate;
 
-    private static final String KEY_NAME = "login_users";
+
 
     @Override
     public void addUsername(String username) {
-        redisTemplate.opsForSet().add(KEY_NAME, username);
+        redisTemplate.opsForSet().add(RedisConstants.LOGIN_USERS, username);
     }
 
     @Override
     public boolean usernameExists(String username) {
-        return redisTemplate.opsForSet().isMember(KEY_NAME, username);
+        return redisTemplate.opsForSet().isMember(RedisConstants.LOGIN_USERS, username);
     }
 
     @Override
     public void removeUsername(String username) {
-        redisTemplate.opsForSet().remove(KEY_NAME, username);
+        redisTemplate.opsForSet().remove(RedisConstants.LOGIN_USERS, username);
     }
 }

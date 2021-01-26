@@ -1,4 +1,4 @@
-package com.jerrykcode.eagain.util;
+package com.jerrykcode.eagain.util.redis;
 
 import org.springframework.stereotype.Component;
 

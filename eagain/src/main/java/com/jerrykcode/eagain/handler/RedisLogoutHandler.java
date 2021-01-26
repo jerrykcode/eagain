@@ -1,8 +1,7 @@
 package com.jerrykcode.eagain.handler;
 
-import com.jerrykcode.eagain.model.UserDetailsImpl;
 import com.jerrykcode.eagain.util.JwtUtils;
-import com.jerrykcode.eagain.util.RedisSessionUtils;
+import com.jerrykcode.eagain.util.redis.RedisSessionUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;

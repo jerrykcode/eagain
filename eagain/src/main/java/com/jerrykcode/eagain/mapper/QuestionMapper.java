@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface QuestionMapper {
     void create(Question question);
+    Question queryById(@Param("id") Long id);
 }

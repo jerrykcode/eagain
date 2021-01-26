@@ -8,4 +8,9 @@
         values
         (#{questionId}, #{tagId})
     </insert>
+    <select id="listByQuestionId" resultType="com.jerrykcode.eagain.model.Tag" parameterType="java.lang.Long">
+        select tag.* from
+        question_tag inner join tag on question_tag.tag_id = tag.id
+        where question_tag.question_id = #{questionId}
+    </select>
 </mapper>

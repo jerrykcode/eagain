@@ -8,7 +8,7 @@ import com.jerrykcode.eagain.model.UserDetailsImpl;
 import com.jerrykcode.eagain.model.UserRole;
 import com.jerrykcode.eagain.request.RegisterRequest;
 import com.jerrykcode.eagain.response.RegisterResponse;
-import com.jerrykcode.eagain.util.RedisMailCodeUtils;
+import com.jerrykcode.eagain.util.redis.RedisMailCodeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.StringUtils;

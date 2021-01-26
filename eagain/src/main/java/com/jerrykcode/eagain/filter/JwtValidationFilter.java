@@ -1,7 +1,7 @@
 package com.jerrykcode.eagain.filter;
 
 import com.jerrykcode.eagain.util.JwtUtils;
-import com.jerrykcode.eagain.util.RedisSessionUtils;
+import com.jerrykcode.eagain.util.redis.RedisSessionUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

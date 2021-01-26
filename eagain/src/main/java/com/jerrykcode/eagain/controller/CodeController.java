@@ -3,7 +3,7 @@ package com.jerrykcode.eagain.controller;
 import com.jerrykcode.eagain.request.SendCodeRequest;
 import com.jerrykcode.eagain.response.BaseResponse;
 import com.jerrykcode.eagain.service.MailService;
-import com.jerrykcode.eagain.util.RedisMailCodeUtils;
+import com.jerrykcode.eagain.util.redis.RedisMailCodeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
