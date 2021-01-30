@@ -4,6 +4,9 @@
         <MenuItem name="search">
             <Input search placeholder="输入搜索的内容..." />
         </MenuItem>
+        <MenuItem name="register">
+            <Button type="success" ghost  @click="moveToAsk()">提问</Button>
+        </MenuItem>
         <MenuItem name="register" v-show="login == false">
             <Button type="success" ghost  @click="moveToRegister()">注册</Button>
         </MenuItem>
@@ -56,11 +59,19 @@ export default {
         moveToLogin: function() {
             this.$router.push({path: '/login'});
         },
+        moveToAsk: function() {
+            if (this.login) {
+                this.$router.push({path: '/ask'});
+            }
+            else {
+                alert('请先登录');
+            }
+        },
         logout: function() {
             var token = localStorage.getItem("token");
             this.$http.get("/logout", {headers:{'token':token}}).then(res=>{});
             localStorage.removeItem('token'); 
-            location.reload();      
+            this.$router.push({path:'/home'});
         },
     }
 }

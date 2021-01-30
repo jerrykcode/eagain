@@ -7,6 +7,15 @@ import axios from 'axios'
 import Axios from 'axios'
 import ViewUI from 'view-design'
 import 'view-design/dist/styles/iview.css'
+import VueHighlightJS from 'highlight.js';
+
+Vue.use(VueHighlightJS)
+Vue.directive('highlight', (el) => {
+  let blocks = el.querySelectorAll('pre code')
+  blocks.forEach((block) => {
+    VueHighlightJS.highlightBlock(block)
+  })
+})
 
 Vue.config.productionTip = false
 Vue.use(ViewUI)
