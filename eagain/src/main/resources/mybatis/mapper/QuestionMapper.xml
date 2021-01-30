@@ -7,6 +7,7 @@
         <result column="creator_id" property="creatorId" jdbcType="BIGINT"></result>
         <result column="gmt_create" property="gmtCreate" jdbcType="BIGINT"></result>
         <result column="gmt_modified" property="gmtModified" jdbcType="BIGINT"></result>
+        <result column="answers_count" property="answersCount" jdbcType="INTEGER"></result>
         <result column="views_count" property="viewsCount" jdbcType="INTEGER"></result>
         <result column="likes_count" property="likesCount" jdbcType="INTEGER"></result>
         <result column="focuses_count" property="focusesCount" jdbcType="INTEGER"></result>

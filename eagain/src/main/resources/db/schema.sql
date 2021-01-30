@@ -67,6 +67,7 @@ CREATE TABLE `question` (
     content VARCHAR(1024) NOT NULL,
     gmt_create BIGINT,
     gmt_modified BIGINT,
+    answers_count INTEGER DEFAULT 0,
     views_count INTEGER DEFAULT 0,
     likes_count INTEGER DEFAULT 0,
     focuses_count INTEGER DEFAULT 1
@@ -99,6 +100,7 @@ DROP TABLE IF EXISTS `answer`;
 CREATE TABLE `answer` (
     id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     question_id BIGINT NOT NULL,
+    question_title VARCHAR(100) NOT NULL,
     creator_id BIGINT NOT NULL,
     content VARCHAR(1024) NOT NULL,
     gmt_create BIGINT,

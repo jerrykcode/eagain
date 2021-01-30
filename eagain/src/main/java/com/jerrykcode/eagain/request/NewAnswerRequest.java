@@ -9,6 +9,7 @@ import java.io.Serializable;
 @Data
 public class NewAnswerRequest implements Serializable {
     private Long questionId;
+    private String questionTitle;
     private Long creatorId;
     private String content;
 }

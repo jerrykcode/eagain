@@ -3,9 +3,23 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.jerrykcode.eagain.mapper.AnswerMapper">
+    <resultMap id="answerMap" type="com.jerrykcode.eagain.model.Answer">
+        <result column="question_id" property="questionId" jdbcType="BIGINT"></result>
+        <result column="question_title" property="questionTitle" jdbcType="VARCHAR"></result>
+        <result column="creator_id" property="creatorId" jdbcType="BIGINT"></result>
+        <result column="gmt_create" property="gmtCreate" jdbcType="BIGINT"></result>
+        <result column="gmt_modified" property="gmtModified" jdbcType="BIGINT"></result>
+        <result column="views_count" property="viewsCount" jdbcType="INTEGER"></result>
+        <result column="likes_count" property="likesCount" jdbcType="INTEGER"></result>
+        <result column="collections_count" property="collectionsCount" jdbcType="INTEGER"></result>
+    </resultMap>
     <insert id="create" parameterType="com.jerrykcode.eagain.model.Answer">
-        insert into answer(question_id, creator_id, content, gmt_create, gmt_modified)
+        insert into answer(question_id, question_title, creator_id, content, gmt_create, gmt_modified)
         values
-        (#{questionId}, #{creatorId}, #{content}, #{gmtCreate}, #{gmtModified})
+        (#{questionId}, #{questionTitle}, #{creatorId}, #{content}, #{gmtCreate}, #{gmtModified})
     </insert>
+    <select id="listByQuestionId" resultMap="answerMap">
+        select * from answer where question_id = #{questionId}
+        limit #{limit} offset #{offset}
+    </select>
 </mapper>

@@ -26,8 +26,21 @@
                     <br>
                     <span style="color:red;" v-show="answerContentEmpty">回答没有任何内容</span>
                     <Button type="success" style="float:right" @click="answer()"><Icon type="ios-send-outline" size="20"/>提交回答</Button>
-                    <br>
+                    <br>                    
                 </div>
+                <Divider />
+                <h3>{{answersCount}}个回答</h3>
+                <Card v-for="(answer, i) in answers" :key=i>
+                    <h3>{{answer.creatorName}}</h3>
+                    <div class="markdown-body">
+                        <vue-markdown v-highlight="true" :source="answer.answer.content"></vue-markdown>
+                    </div>
+                    <span style="color: gray; font-size: small;">发布于{{datetimeFormat(answer.answer.gmtCreate)}} 
+                        | {{answer.answer.viewsCount}}阅读 | {{answer.answer.likesCount}}喜欢 
+                        | {{answer.answer.collectionsCount}}收藏</span>
+                </Card>
+                    <Page :total="17" size="small" :page-size="numPerPage" :page-size-opts="[5, 10, 20]"
+                         show-elevator show-sizer @on-change="changePage" @on-page-size-change = "changePageSize" />
                 </Card>
             </div>
             <div slot="right" class="demo-split-right">
@@ -61,12 +74,15 @@ export default {
             tags: [],
             dateCreate: '',
             dateModified: '',
+            answersCount: 0,
             viewsCount: 0,
             likesCount: 0,
             focusesCount: 0,
             answerQuestion: false,
             answerContent: '',
-            answerContentEmpty: false
+            answerContentEmpty: false,
+            answers: [],            
+            numPerPage: 5
         }
     },
     created() {
@@ -77,19 +93,22 @@ export default {
             this.username = jwtStr.username;
             this.userId = jwtStr.id;
         }
-        this.questionId = this.$route.params.id;       
+        this.questionId = this.$route.params.id; 
         this.$http.get('/questions/query/'+this.questionId).then(res=>{
-            //console.log(res);
             this.creatorName = res.data.creatorName;
             this.title = res.data.title;
             this.content = res.data.content;
             this.tags = res.data.tags;            
             this.dateCreate = this.datetimeFormat(res.data.gmtCreate);
             this.dateModified = this.datetimeFormat(res.data.gmtModified);
+            this.answersCount = res.data.answersCount;
             this.viewsCount = res.data.viewsCount;
             this.likesCount = res.data.likesCount;
             this.focusesCount = res.data.focusesCount;
-        })
+        });        
+    },
+    mounted() {
+        this.getAnswers(1);
     },
     methods: {
         datetimeFormat: function(longTypeDate){
@@ -115,12 +134,35 @@ export default {
             else {
                 this.$http.post('/answers/new', {
                     'questionId': this.questionId,
+                    'questionTitle': this.title,
                     'creatorId': this.userId,
                     'content': this.answerContent
                 }, {headers:{'token': localStorage.getItem('token')}}).then(res=>{
                     this.answerQuestion = false;
+                    this.getAnswers(1);
                 })
             }
+        },
+
+        getAnswers: function(pageNo) {
+            this.$http.get('/answers/list', {
+                params :{
+                    'questionId': this.questionId,
+                    'pageNo': pageNo,
+                    'numPerPage': this.numPerPage
+                }
+            }).then(res=>{
+                this.answers = res.data;
+            });            
+        },
+
+        changePage: function(pageNo) {
+            this.getAnswers(pageNo);
+        },
+
+        changePageSize: function(pageSize) {
+            this.numPerPage = pageSize;
+            this.getAnswers(1);
         }
     }
 }

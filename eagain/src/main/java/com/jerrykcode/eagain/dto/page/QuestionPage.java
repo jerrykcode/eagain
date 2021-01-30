@@ -15,6 +15,7 @@ public class QuestionPage implements Serializable {
     private String content;
     private Long gmtCreate;
     private Long gmtModified;
+    private Integer answersCount;
     private Integer viewsCount;
     private Integer likesCount;
     private Integer focusesCount;

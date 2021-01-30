@@ -41,6 +41,7 @@ public class QuestionServiceImpl implements QuestionService {
                 .setContent(question.getContent())
                 .setGmtCreate(question.getGmtCreate())
                 .setGmtModified(question.getGmtModified())
+                .setAnswersCount(question.getAnswersCount())
                 .setViewsCount(question.getViewsCount())
                 .setLikesCount(question.getLikesCount())
                 .setFocusesCount(question.getFocusesCount())

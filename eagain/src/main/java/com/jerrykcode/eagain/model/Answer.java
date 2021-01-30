@@ -10,6 +10,7 @@ import java.io.Serializable;
 public class Answer implements Serializable {
     private Long id;
     private Long questionId;
+    private String questionTitle;
     private Long creatorId;
     private String content;
     private Long gmtCreate;
