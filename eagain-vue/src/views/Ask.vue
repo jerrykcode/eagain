@@ -93,11 +93,11 @@ export default {
             }
             else {
                 this.$http.post('/questions/new', {
-                    creatorId: this.userId,
-                    title: this.title,
-                    content: this.content,
-                    tagIds: this.selectedTagIds
-                }, {headers:{token: localStorage.getItem("token")}}).then(res=>{
+                    'creatorId': this.userId,
+                    'title': this.title,
+                    'content': this.content,
+                    'tagIds': this.selectedTagIds
+                }, {headers:{'token': localStorage.getItem("token")}}).then(res=>{
                     this.$router.push({path:'/questions/'+res.data});
                 });
             }

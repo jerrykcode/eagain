@@ -91,3 +91,20 @@ CREATE TABLE `question_tag` (
    question_id BIGINT NOT NULL,
    tag_id INTEGER NOT NULL
 );
+
+-- -----------------------------------
+-- 回答表
+-- -----------------------------------
+DROP TABLE IF EXISTS `answer`;
+CREATE TABLE `answer` (
+    id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    question_id BIGINT NOT NULL,
+    creator_id BIGINT NOT NULL,
+    content VARCHAR(1024) NOT NULL,
+    gmt_create BIGINT,
+    gmt_modified BIGINT,
+    views_count INTEGER DEFAULT 0,
+    likes_count INTEGER DEFAULT 0,
+    collections_count INTEGER DEFAULT 0
+);
+CREATE INDEX question_id_index on answer(question_id);

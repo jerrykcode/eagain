@@ -19,6 +19,15 @@
                 <br>
                 <span style="color: gray; font-size: small;">阅读量:{{viewsCount}} | 关注数:{{focusesCount}}    发布于 {{dateCreate}} 最后编辑于 {{dateModified}}  </span>
                 <Divider />
+                <Button type="success" ghost @click="answerQuestion=true"><Icon type="ios-create-outline" size="20" /> 回答问题</Button>
+                <div class="markdownpro" v-show="answerQuestion">
+                    <br>
+                    <mavon-editor v-model="answerContent"/>
+                    <br>
+                    <span style="color:red;" v-show="answerContentEmpty">回答没有任何内容</span>
+                    <Button type="success" style="float:right" @click="answer()"><Icon type="ios-send-outline" size="20"/>提交回答</Button>
+                    <br>
+                </div>
                 </Card>
             </div>
             <div slot="right" class="demo-split-right">
@@ -54,7 +63,10 @@ export default {
             dateModified: '',
             viewsCount: 0,
             likesCount: 0,
-            focusesCount: 0
+            focusesCount: 0,
+            answerQuestion: false,
+            answerContent: '',
+            answerContentEmpty: false
         }
     },
     created() {
@@ -94,6 +106,21 @@ export default {
             minute = minute < 10 ? ('0' + minute) : minute
             second = second < 10 ? ('0' + second) : second
             return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second
+        },
+
+        answer: function() {
+            if (this.answerContent.length == 0) {
+                this.answerContentEmpty = true;
+            }
+            else {
+                this.$http.post('/answers/new', {
+                    'questionId': this.questionId,
+                    'creatorId': this.userId,
+                    'content': this.answerContent
+                }, {headers:{'token': localStorage.getItem('token')}}).then(res=>{
+                    this.answerQuestion = false;
+                })
+            }
         }
     }
 }
