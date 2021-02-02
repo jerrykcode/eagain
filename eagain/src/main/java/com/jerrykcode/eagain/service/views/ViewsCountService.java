@@ -1,0 +1,9 @@
+package com.jerrykcode.eagain.service.views;
+
+import com.jerrykcode.eagain.enums.DBModelEnum;
+import org.springframework.stereotype.Service;
+
+@Service
+public interface ViewsCountService {
+    Long increaseViewsCount(DBModelEnum dbModel, String id);
+}

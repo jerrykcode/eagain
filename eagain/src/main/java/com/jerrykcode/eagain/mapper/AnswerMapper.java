@@ -14,4 +14,6 @@ public interface AnswerMapper {
     List<Answer> listByQuestionId(@Param("questionId") Long questionId,
                                   @Param("limit")Integer limit,
                                   @Param("offset")Integer offset);
+    Answer queryById(Long id);
+    void update(Answer answer);
 }

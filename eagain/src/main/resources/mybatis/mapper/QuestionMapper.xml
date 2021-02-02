@@ -26,4 +26,21 @@
         parameterType="java.lang.Long">
         select * from question where id = #{id}
     </select>
+
+    <update id="update" parameterType="com.jerrykcode.eagain.model.Question">
+        <if test="id != null">
+            update question
+            set id = id
+            <if test="creatorId != null">, creator_id = #{creatorId}</if>
+            <if test="title != null">, title = #{title}</if>
+            <if test="content != null">, content = #{content}</if>
+            <if test="gmtCreate != null">, gmt_create = #{gmtCreate}</if>
+            <if test="gmtModified != null">, gmt_modified = #{gmtModified}</if>
+            <if test="viewsCount != null">, views_count = #{viewsCount}</if>
+            <if test="likesCount != null">, likes_count = #{likesCount}</if>
+            <if test="focusesCount != null">, focuses_count = #{focusesCount}</if>
+            <if test="answersCount != null">, answers_count = #{answersCount}</if>
+            where id = #{id}
+        </if>
+    </update>
 </mapper>

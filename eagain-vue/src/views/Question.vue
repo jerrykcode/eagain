@@ -17,7 +17,7 @@
                     <Tag v-for="(tag, i) in tags" :key=i :color="tag.color">{{tag.title}}</Tag>
                 </span>
                 <br>
-                <span style="color: gray; font-size: small;">阅读量:{{viewsCount}} | 关注数:{{focusesCount}}    发布于 {{dateCreate}} 最后编辑于 {{dateModified}}  </span>
+                <span style="color: gray; font-size: small;">{{viewsCount}}阅读 | {{answersCount}}回答 | {{focusesCount}}关注    发布于 {{dateCreate}} 最后编辑于 {{dateModified}}  </span>
                 <Divider />
                 <Button type="success" ghost @click="answerQuestion=true"><Icon type="ios-create-outline" size="20" /> 回答问题</Button>
                 <div class="markdownpro" v-show="answerQuestion">

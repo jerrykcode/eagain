@@ -2,13 +2,13 @@ package com.jerrykcode.eagain.service.cache.impl;
 
 import com.jerrykcode.eagain.mapper.UserMapper;
 import com.jerrykcode.eagain.model.UserDetailsImpl;
-import com.jerrykcode.eagain.service.cache.CacheService;
+import com.jerrykcode.eagain.service.cache.CacheServiceTemplate;
 import com.jerrykcode.eagain.util.redis.RedisUserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class Username2IdService extends CacheService {
+public class Username2IdService extends CacheServiceTemplate {
 
     @Autowired
     private RedisUserUtils redisUserUtils;

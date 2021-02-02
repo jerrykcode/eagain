@@ -22,4 +22,23 @@
         select * from answer where question_id = #{questionId}
         limit #{limit} offset #{offset}
     </select>
+    <select id="queryById" resultMap="answerMap">
+        select * from answer where id = #{id}
+    </select>
+    <update id="update" parameterType="com.jerrykcode.eagain.model.Answer">
+        <if test="id != null">
+            update answer
+            set id = id
+            <if test="questionId != null">, question_id = #{questionId}</if>
+            <if test="questionTitle != null">, question_title = #{questionTitle}</if>
+            <if test="creatorId != null">, creator_id = #{creatorId}</if>
+            <if test="content != null">, content = #{content}</if>
+            <if test="gmtCreate != null">, gmt_create = #{gmtCreate}</if>
+            <if test="gmtModified != null">, gmt_modified = #{gmtModified}</if>
+            <if test="viewsCount != null">, views_count = #{viewsCount}</if>
+            <if test="likesCount != null">, likes_count = #{likesCount}</if>
+            <if test="collectionsCount != null">, collections_count = #{collectionsCount}</if>
+            where id = #{id}
+        </if>
+    </update>
 </mapper>

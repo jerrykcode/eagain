@@ -3,7 +3,7 @@ package com.jerrykcode.eagain.service.cache;
 import org.springframework.stereotype.Service;
 
 @Service
-public abstract class CacheService {
+public abstract class CacheServiceTemplate {
 
     protected abstract Object getFromCache(Object key);
     protected abstract Object getFromMySql(Object key);

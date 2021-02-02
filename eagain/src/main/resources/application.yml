@@ -20,10 +20,13 @@ spring:
     port: 6379
     password:
   mail:
-    username: xxx@126.com #邮箱
+    username: youremail@126.com #邮箱 这里使用126邮箱
     password: #开启smtp时的授权码
     host: smtp.126.com
     properties:
       mail:
         smtp:
           auth: true
+  time:
+    cron: '0 0 0/2 * * ?'
+    interval: 5

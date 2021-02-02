@@ -2,10 +2,13 @@ package com.jerrykcode.eagain.service.impl;
 
 import com.jerrykcode.eagain.dto.QuestionDTO;
 import com.jerrykcode.eagain.dto.page.QuestionPage;
+import com.jerrykcode.eagain.enums.DBModelEnum;
 import com.jerrykcode.eagain.mapper.QuestionMapper;
 import com.jerrykcode.eagain.mapper.QuestionTagMapper;
 import com.jerrykcode.eagain.model.Question;
+import com.jerrykcode.eagain.service.AnswersCountService;
 import com.jerrykcode.eagain.service.QuestionService;
+import com.jerrykcode.eagain.service.views.ViewsCountService;
 import com.jerrykcode.eagain.service.cache.impl.Id2UsernameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +24,12 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Autowired
     private Id2UsernameService id2UsernameService;
+
+    @Autowired
+    private ViewsCountService viewsCountService;
+
+    @Autowired
+    private AnswersCountService answersCountService;
 
     @Override
     public Long create(QuestionDTO questionDTO) {
@@ -41,8 +50,8 @@ public class QuestionServiceImpl implements QuestionService {
                 .setContent(question.getContent())
                 .setGmtCreate(question.getGmtCreate())
                 .setGmtModified(question.getGmtModified())
-                .setAnswersCount(question.getAnswersCount())
-                .setViewsCount(question.getViewsCount())
+                //.setAnswersCount(answersCountService.getAnswersCount(questionId).intValue())
+                .setViewsCount(viewsCountService.increaseViewsCount(DBModelEnum.DB_QUESTION, "" + questionId).intValue())
                 .setLikesCount(question.getLikesCount())
                 .setFocusesCount(question.getFocusesCount())
                 .setTags(questionTagMapper.listByQuestionId(questionId));
