@@ -43,4 +43,10 @@
             where id = #{id}
         </if>
     </update>
+
+    <update id="incrAnswersCount">
+        update question
+        set answers_count = answers_count + #{increment}
+        where id = #{questionId}
+    </update>
 </mapper>

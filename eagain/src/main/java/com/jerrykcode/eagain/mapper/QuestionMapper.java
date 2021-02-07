@@ -11,4 +11,5 @@ public interface QuestionMapper {
     void create(Question question);
     Question queryById(@Param("id") Long id);
     void update(Question question);
+    void incrAnswersCount(@Param("questionId") Long questionId, @Param("increment") Integer increment);
 }

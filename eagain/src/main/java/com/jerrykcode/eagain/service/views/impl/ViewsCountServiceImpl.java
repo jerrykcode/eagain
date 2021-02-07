@@ -67,7 +67,12 @@ public class ViewsCountServiceImpl extends CacheServiceTemplate implements Views
         if (o != null) {
             Long viewCount = Long.valueOf((String) o);
             if (viewCount == INVAILD_VALUE) return viewCount;
-            return redisTemplate.opsForHash().increment(RedisConstants.VIEWS_HASH, key, 1);
+            Long increment = redisTemplate.opsForHash().increment(RedisConstants.VIEWS_HASH, key, 1);
+            if (increment <= 1) {
+                redisTemplate.opsForHash().delete(RedisConstants.VIEWS_HASH, key);
+                return null;
+            }
+            return increment;
         }
         return null;
     }

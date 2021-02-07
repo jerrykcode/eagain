@@ -2,12 +2,13 @@ package com.jerrykcode.eagain.service.impl;
 
 import com.jerrykcode.eagain.enums.DBModelEnum;
 import com.jerrykcode.eagain.mapper.AnswerMapper;
+import com.jerrykcode.eagain.mapper.QuestionMapper;
 import com.jerrykcode.eagain.model.Answer;
 import com.jerrykcode.eagain.service.AnswerService;
-import com.jerrykcode.eagain.service.AnswersCountService;
 import com.jerrykcode.eagain.service.views.ViewsCountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,14 +19,15 @@ public class AnswerServiceImpl implements AnswerService {
     private AnswerMapper answerMapper;
 
     @Autowired
-    private ViewsCountService viewsCountService;
+    private QuestionMapper questionMapper;
 
     @Autowired
-    private AnswersCountService answersCountService;
+    private ViewsCountService viewsCountService;
 
     @Override
+    @Transactional
     public void create(Answer answer) {
-        //answersCountService.increaseAnswersCount(answer.getQuestionId());
+        questionMapper.incrAnswersCount(answer.getQuestionId(), 1);
         answerMapper.create(answer);
     }
 
