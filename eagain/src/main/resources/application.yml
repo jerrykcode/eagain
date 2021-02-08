@@ -28,5 +28,6 @@ spring:
         smtp:
           auth: true
   time:
-    cron: '0 0 0/2 * * ?'
-    interval: 5
+    cron:
+      views: '0 0 0/2 * * ?'
+      likes: '0 0 0/3 * * ?'
