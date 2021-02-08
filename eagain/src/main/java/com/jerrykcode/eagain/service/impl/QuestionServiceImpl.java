@@ -7,6 +7,7 @@ import com.jerrykcode.eagain.mapper.QuestionMapper;
 import com.jerrykcode.eagain.mapper.QuestionTagMapper;
 import com.jerrykcode.eagain.model.Question;
 import com.jerrykcode.eagain.service.QuestionService;
+import com.jerrykcode.eagain.service.likes.LikesCountService;
 import com.jerrykcode.eagain.service.views.ViewsCountService;
 import com.jerrykcode.eagain.service.cache.impl.Id2UsernameService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Autowired
     private ViewsCountService viewsCountService;
+
+    @Autowired
+    private LikesCountService likesCountService;
 
     @Override
     public Long create(QuestionDTO questionDTO) {
@@ -48,7 +52,7 @@ public class QuestionServiceImpl implements QuestionService {
                 .setGmtModified(question.getGmtModified())
                 .setAnswersCount(question.getAnswersCount())
                 .setViewsCount(viewsCountService.increaseViewsCount(DBModelEnum.DB_QUESTION, "" + questionId).intValue())
-                .setLikesCount(question.getLikesCount())
+                .setLikesCount(likesCountService.getLikesCount(DBModelEnum.DB_QUESTION, "" + questionId).intValue())
                 .setFocusesCount(question.getFocusesCount())
                 .setTags(questionTagMapper.listByQuestionId(questionId));
     }

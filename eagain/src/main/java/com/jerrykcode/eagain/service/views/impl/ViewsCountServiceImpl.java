@@ -48,7 +48,7 @@ public class ViewsCountServiceImpl extends CacheServiceTemplate implements Views
         return (Long) get(getRedisHashKey(dbModel, id));
     }
 
-    @Scheduled(cron = "${spring.time.cron}")
+    @Scheduled(cron = "${spring.time.cron.views}")
     void persistence() {
         Map<String, String> entries = redisTemplate.opsForHash().entries(RedisConstants.VIEWS_HASH);
         if (entries != null && !entries.isEmpty()) {
@@ -57,7 +57,7 @@ public class ViewsCountServiceImpl extends CacheServiceTemplate implements Views
                 String id = parseIdFromRedisHashKey(key);
                 dbViewService.updateViewsCount(id, entries.get(key));
             });
-            log.info(">>>Persist to Database<<<");
+            log.info(">>>Persist to Database: views count<<<");
         }
     }
 

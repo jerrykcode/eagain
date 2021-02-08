@@ -17,7 +17,10 @@
                     <Tag v-for="(tag, i) in tags" :key=i :color="tag.color">{{tag.title}}</Tag>
                 </span>
                 <br>
-                <span style="color: gray; font-size: small;">{{viewsCount}}阅读 | {{answersCount}}回答 | {{focusesCount}}关注    发布于 {{dateCreate}} 最后编辑于 {{dateModified}}  </span>
+                <span style="color: gray; font-size: small;"><Button text size="small">{{viewsCount}}阅读</Button> | 
+                    <Button text size="small">{{answersCount}}回答</Button> | 
+                    <Button text size="small">{{focusesCount}}关注</Button> | 
+                    <Button text size="small" @click="likeQuestion()"><Icon type="ios-heart-outline"/>{{likesCount}}喜欢</Button>   发布于 {{dateCreate}} 最后编辑于 {{dateModified}}  </span>              
                 <Divider />
                 <Button type="success" ghost @click="answerQuestion=true"><Icon type="ios-create-outline" size="20" /> 回答问题</Button>
                 <div class="markdownpro" v-show="answerQuestion">
@@ -36,10 +39,11 @@
                         <vue-markdown v-highlight="true" :source="answer.answer.content"></vue-markdown>
                     </div>
                     <span style="color: gray; font-size: small;">发布于{{datetimeFormat(answer.answer.gmtCreate)}} 
-                        | {{answer.answer.viewsCount}}阅读 | {{answer.answer.likesCount}}喜欢 
+                        | {{answer.answer.viewsCount}}阅读 | 
+                        {{answer.answer.likesCount}}喜欢<Button text size="small" @click="likeAnswer(answer.answer)"><Icon type="ios-heart-outline"/></Button> 
                         | {{answer.answer.collectionsCount}}收藏</span>
                 </Card>
-                    <Page :total="17" size="small" :page-size="numPerPage" :page-size-opts="[5, 10, 20]"
+                    <Page :total="answersCount" size="small" :page-size="numPerPage" :page-size-opts="[5, 10, 20]"
                          show-elevator show-sizer @on-change="changePage" @on-page-size-change = "changePageSize" />
                 </Card>
             </div>
@@ -125,6 +129,18 @@ export default {
             minute = minute < 10 ? ('0' + minute) : minute
             second = second < 10 ? ('0' + second) : second
             return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second
+        },
+
+        likeQuestion: function() {
+            this.$http.post('/like/question/'+this.questionId, {}, {headers:{'token': localStorage.getItem('token')}}).then(res=>{              
+                this.likesCount = res.data;
+            });
+        },
+
+        likeAnswer: function(answer) {
+            this.$http.post('/like/answer/'+answer.id, {}, {headers:{'token': localStorage.getItem('token')}}).then(res=>{
+                answer.likesCount = res.data;
+            });
         },
 
         answer: function() {
