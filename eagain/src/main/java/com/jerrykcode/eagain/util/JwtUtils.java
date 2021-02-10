@@ -69,6 +69,13 @@ public class JwtUtils {
         else return null;
     }
 
+    public static Long getUserId(String token) {
+        Claims claims = validateJwtToken(token);
+        if (claims != null)
+            return Long.valueOf(""+claims.get("id"));
+        else return null;
+    }
+
     /**
      * 获取用户角色
      *

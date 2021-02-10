@@ -42,7 +42,12 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public QuestionPage queryById(Long questionId) {
+    public Question queryById(Long questionId) {
+        return questionMapper.queryById(questionId);
+    }
+
+    @Override
+    public QuestionPage getQuestionPage(Long questionId) {
         Question question = questionMapper.queryById(questionId);
         return new QuestionPage()
                 .setCreatorName(id2UsernameService.id2Username(question.getCreatorId()))

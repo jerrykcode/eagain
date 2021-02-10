@@ -36,6 +36,11 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
+    public Answer queryById(Long answerId) {
+        return answerMapper.queryById(answerId);
+    }
+
+    @Override
     public List<Answer> listByQuestionId(Long questionId, Integer pageNo, Integer numPerPage) {
         Integer offset = (pageNo - 1) * numPerPage;
         List<Answer> answers = answerMapper.listByQuestionId(questionId, numPerPage, offset);

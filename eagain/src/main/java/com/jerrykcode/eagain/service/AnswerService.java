@@ -8,5 +8,6 @@ import java.util.List;
 @Service
 public interface AnswerService {
     void create(Answer answer);
+    Answer queryById(Long answerId);
     List<Answer> listByQuestionId(Long questionId, Integer pageNo, Integer numPerPage);
 }

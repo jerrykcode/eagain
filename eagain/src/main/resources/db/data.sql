@@ -4,6 +4,9 @@ INSERT INTO sys_permission(id, perm_name, perm_tag, url) values (3, '新建问�
 INSERT INTO sys_permission(id, perm_name, perm_tag, url) values (4, '新建回答', '新建回答', '/answers/new');
 INSERT INTO sys_permission(id, perm_name, perm_tag, url) values (5, '喜欢问题', '喜欢问题', '/like/question/*');
 INSERT INTO sys_permission(id, perm_name, perm_tag, url) values (6, '喜欢回答', '喜欢回答', '/like/answer/*');
+INSERT INTO sys_permission(id, perm_name, perm_tag, url) values (7, '获取未读通知', '获取未读通知', '/notifications/unread');
+INSERT INTO sys_permission(id, perm_name, perm_tag, url) values (8, '获取已读通知', '获取已读通知', '/notifications/read');
+INSERT INTO sys_permission(id, perm_name, perm_tag, url) values (9, '处理通知', '处理通知', '/notifications/handle');
 
 INSERT INTO sys_role(id, role_name, role_desc) values(1, 'admin', '管理员');
 INSERT INTO sys_role(id, role_name, role_desc) values(2, 'user', '普通用户');
@@ -14,11 +17,18 @@ INSERT INTO sys_role_permission(role_id, perm_id) values(1, 3);
 INSERT INTO sys_role_permission(role_id, perm_id) values(1, 4);
 INSERT INTO sys_role_permission(role_id, perm_id) values(1, 5);
 INSERT INTO sys_role_permission(role_id, perm_id) values(1, 6);
+INSERT INTO sys_role_permission(role_id, perm_id) values(1, 7);
+INSERT INTO sys_role_permission(role_id, perm_id) values(1, 8);
+INSERT INTO sys_role_permission(role_id, perm_id) values(1, 9);
+
 INSERT INTO sys_role_permission(role_id, perm_id) values(2, 1);
 INSERT INTO sys_role_permission(role_id, perm_id) values(2, 3);
 INSERT INTO sys_role_permission(role_id, perm_id) values(2, 4);
 INSERT INTO sys_role_permission(role_id, perm_id) values(2, 5);
 INSERT INTO sys_role_permission(role_id, perm_id) values(2, 6);
+INSERT INTO sys_role_permission(role_id, perm_id) values(2, 7);
+INSERT INTO sys_role_permission(role_id, perm_id) values(2, 8);
+INSERT INTO sys_role_permission(role_id, perm_id) values(2, 9);
 
 INSERT INTO sys_user(username, email, password, account_opts) values ('test_user', 'xx@xx.com', '$2y$12$Jif94d9mBJg8pA33niCo8erqW5G3BF4Jo2OTyCErvgbnuX3kVp.6m', 15); -- 密码: test123
 INSERT INTO sys_user_role(user_id, role_id) values (1, 2);

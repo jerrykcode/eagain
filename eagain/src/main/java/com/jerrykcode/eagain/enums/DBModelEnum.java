@@ -1,6 +1,8 @@
 package com.jerrykcode.eagain.enums;
 
-public enum DBModelEnum {
+import java.io.Serializable;
+
+public enum DBModelEnum implements Serializable {
     DB_QUESTION("question"), DB_ANSWER("answer");
 
     private String name;

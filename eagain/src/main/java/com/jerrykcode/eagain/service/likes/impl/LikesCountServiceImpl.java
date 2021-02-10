@@ -22,7 +22,7 @@ public class LikesCountServiceImpl extends CacheServiceTemplate implements Likes
 
     @Override
     public Long getLikesCount(DBModelEnum dbModelEnum, String id) {
-        return Long.valueOf((String) get(LikesService.getRedisHashKey(dbModelEnum, id)));
+        return Long.valueOf("" + get(LikesService.getRedisHashKey(dbModelEnum, id)));
     }
 
     @Override

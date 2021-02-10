@@ -110,3 +110,18 @@ CREATE TABLE `answer` (
     collections_count INTEGER DEFAULT 0
 );
 CREATE INDEX question_id_index on answer(question_id);
+
+-- -----------------------------------
+-- 通知表
+-- -----------------------------------
+DROP TABLE IF EXISTS `notification`;
+CREATE TABLE `notification` (
+    sender_id BIGINT NOT NULL,
+    receiver_id BIGINT NOT NULL,
+    notification_type enum('NOTIFICATION_TYPE_LIKE', 'NOTIFICATION_TYPE_COMMENT') NOT NULL,
+    db_model_name enum('DB_QUESTION', 'DB_ANSWER') NOT NULL,
+    model_id BIGINT NOT NULL,
+    has_read BOOLEAN DEFAULT FALSE
+);
+CREATE INDEX notification_sender_id_index on notification(sender_id);
+CREATE INDEX notification_receiver_id_index on notification(receiver_id);
