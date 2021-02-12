@@ -6,6 +6,9 @@
                 {{content.content}}
                 <Button type="success" ghost size="small" @click="moveToLink(content.link)">查看>></Button>
             </ListItem>
+            <ListItem>
+                <Button long @click="more()">查看更多...</Button>
+            </ListItem>
         </List>
     </div>
 </template>
@@ -22,8 +25,8 @@ export default {
             login: false,
             username: null,
             userId: 0,
-            notifications: [],
-            notificationContents: []
+            notificationContents: [],
+            lastPage: 0
         }
     },
     created() {
@@ -34,11 +37,24 @@ export default {
             this.username = jwtStr.username;
             this.userId = jwtStr.id;
         }
-        this.$http.get("/notifications/read?pageNo=1&numPerPage=5", {headers:{'token':token}}).then(res=>{          
-            this.notifications = res.data;
-            this.notificationContents.length = 0;               
-            for (var i = 0; i < this.notifications.length; i++) {    
-                var element = this.notifications[i];                   
+        this.lastPage = 1;
+        this.getNotifications(this.lastPage, token);
+    },
+    methods: {
+        moveToLink: function(link) {          
+            this.$router.push({path: link});
+            location.reload();
+        },
+        more: function(){
+            var token = localStorage.getItem("token");
+            this.lastPage++;
+            this.getNotifications(this.lastPage, token);
+        },
+        getNotifications: function(pageNo, token) {
+            this.$http.get("/notifications/read?pageNo="+pageNo+"&numPerPage=5", {headers:{'token':token}}).then(res=>{         
+            var notifications = res.data;                          
+            for (var i = 0; i < notifications.length; i++) {    
+                var element = notifications[i];                   
                 var content = element.senderName;
                 var link = '';
                 if (element.notificationType == "like")
@@ -59,13 +75,8 @@ export default {
                     'content': content,
                     'link' : link
                 });
-            }                
-        });
-    },
-    methods: {
-        moveToLink: function(link) {          
-            this.$router.push({path: link});
-            location.reload();
+     }                
+ });
         }
     }
 }
