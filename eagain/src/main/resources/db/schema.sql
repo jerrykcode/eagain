@@ -121,7 +121,8 @@ CREATE TABLE `notification` (
     notification_type enum('NOTIFICATION_TYPE_LIKE', 'NOTIFICATION_TYPE_COMMENT') NOT NULL,
     db_model_name enum('DB_QUESTION', 'DB_ANSWER') NOT NULL,
     model_id BIGINT NOT NULL,
-    has_read BOOLEAN DEFAULT FALSE
+    has_read BOOLEAN DEFAULT FALSE,
+    gmt_send BIGINT
 );
 CREATE INDEX notification_sender_id_index on notification(sender_id);
 CREATE INDEX notification_receiver_id_index on notification(receiver_id);

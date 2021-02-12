@@ -84,6 +84,7 @@ public class NotificationServiceImpl implements NotificationService {
                 .setNotificationType(notification.getNotificationTypeEnum().getName())
                 .setDbModelType(notification.getDbModelEnum().getName())
                 .setModelId(notification.getModelId())
+                .setGmtSend(notification.getGmtSend())
                 .setModelContent("");
         return notificationDTO;
     }

@@ -55,7 +55,9 @@ public class LikeController {
                 .setNotificationTypeEnum(NotificationTypeEnum.NOTIFICATION_TYPE_LIKE)
                 .setDbModelEnum(dbModelEnum)
                 .setModelId(Long.valueOf(id))
-                .setRead(false));
+                .setRead(false)
+                .setGmtSend(System.currentTimeMillis())
+        );
 
         Long likesCount = likesService.increaseLikesCount(dbModelName, id);
         if (likesCount != null)

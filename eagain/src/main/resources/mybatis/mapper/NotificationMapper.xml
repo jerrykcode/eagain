@@ -10,16 +10,18 @@
         <result column="db_model_name" property="dbModelEnum" typeHandler="org.apache.ibatis.type.EnumTypeHandler"></result>
         <result column="model_id" property="modelId" jdbcType="BIGINT"></result>
         <result column="has_read" property="read" jdbcType="BOOLEAN"></result>
+        <result column="gmt_send" property="gmtSend" jdbcType="BIGINT"></result>
     </resultMap>
     <select id="list" resultMap="notificationMap">
         select * from notification
         where receiver_id = #{receiverId}
+        order by gmt_send desc
         limit #{limit} offset #{offset}
     </select>
     <insert id="insert">
         insert into notification
-        (sender_id, receiver_id, notification_type, db_model_name, model_id, has_read)
+        (sender_id, receiver_id, notification_type, db_model_name, model_id, has_read, gmt_send)
         values
-        (#{senderId}, #{receiverId}, #{notificationTypeEnum}, #{dbModelEnum}, #{modelId}, #{read})
+        (#{senderId}, #{receiverId}, #{notificationTypeEnum}, #{dbModelEnum}, #{modelId}, #{read}, #{gmtSend})
     </insert>
 </mapper>

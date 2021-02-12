@@ -20,6 +20,7 @@
     </insert>
     <select id="listByQuestionId" resultMap="answerMap">
         select * from answer where question_id = #{questionId}
+        order by gmt_modified desc
         limit #{limit} offset #{offset}
     </select>
     <select id="queryById" resultMap="answerMap">

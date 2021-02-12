@@ -14,5 +14,6 @@ public class NotificationDTO implements Serializable {
     private String notificationType;
     private String dbModelType;
     private Long modelId;
+    private Long gmtSend;
     private String modelContent;
 }

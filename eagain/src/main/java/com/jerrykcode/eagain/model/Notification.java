@@ -16,4 +16,5 @@ public class Notification implements Serializable {
     private DBModelEnum dbModelEnum;
     private Long modelId;
     private Boolean read;
+    private Long gmtSend;
 }
