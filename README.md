@@ -23,14 +23,14 @@ eagain-vue为前端vue.cli项目
 eagain为后端spring boot项目
 
 
-后端:
+后端:  
 2. 更改 eagain的application.yml中数据库用户名及密码，redis密码.   
    使用邮件功能则需要邮件用户名及smtp授权码  
 
 3. 创建名为eagain的数据库:
 ```
 create database eagain;
-use eagain
+use eagain;
 ```
 运行resources/db目录下的schema.sql和data.sql脚本  
 
@@ -38,8 +38,11 @@ use eagain
 
 服务在8763端口启动  
 
-前端:
-5. 进入eagain-vue目录
-``` npm run dev```启动项目
+前端:  
+5. 进入eagain-vue目录  
+``` 
+npm install # 安装依赖
+npm run dev # 启动项目
+```
 
 访问 http://localhost:8080/
