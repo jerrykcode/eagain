@@ -12,7 +12,7 @@
                         <br/>
                         <span style="color: gray; font-size: smaller;">
                             {{question.creatorName}}
-                            发布于{{datetimeFormat(question.gmtCreate)}} | {{question.viewsCount}}阅读 | 
+                            发布于{{datetimeFormat(question.gmtCreate)}} | {{question.answersCount}}回答 | {{question.viewsCount}}阅读 |  {{question.likesCount}}喜欢
                         </span>
                         <br/>
                         <span style="font-size: small;">{{question.breviary}} ...</span>

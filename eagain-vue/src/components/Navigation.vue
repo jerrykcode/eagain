@@ -4,10 +4,13 @@
         <MenuItem name="search">
             <Input search placeholder="输入搜索的内容..." />
         </MenuItem>
-        <MenuItem name="register">
+        <MenuItem name="home">
+            <Button text @click="moveToHome()">主页</Button>
+        </MenuItem>
+        <MenuItem name="ask">
             <Button type="success" ghost  @click="moveToAsk()">提问</Button>
         </MenuItem>
-        <MenuItem name="notification">
+        <MenuItem name="notification" v-show="login==true">
             <Button text @click="unreadNotifications()">
             <Icon type="ios-notifications-outline" />消息
             </Button>
@@ -80,6 +83,9 @@ export default {
             this.$router.push({path: link});
             location.reload();
         },
+        moveToHome: function() {
+            this.$router.push({path: '/home'});
+        },
         moveToRegister: function() {
             this.$router.push({path: '/register'});
         },
@@ -99,6 +105,7 @@ export default {
             this.$http.get("/logout", {headers:{'token':token}}).then(res=>{});
             localStorage.removeItem('token'); 
             this.$router.push({path:'/home'});
+            location.reload();
         },
         unreadNotifications: function() {
             this.showNotifications = true;
