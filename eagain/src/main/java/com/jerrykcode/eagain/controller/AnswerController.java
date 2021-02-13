@@ -35,8 +35,8 @@ public class AnswerController {
 
     @GetMapping("/list")
     public List<AnswerDTO> listByQuestionId(@RequestParam("questionId")Long questionId,
-                                            @RequestParam("pageNo")Integer pageNo,
-                                            @RequestParam("numPerPage")Integer numPerPage) {
+                                            @RequestParam(value = "pageNo", required = false, defaultValue = "1")Integer pageNo,
+                                            @RequestParam(value = "numPerPage", required = false, defaultValue = "5")Integer numPerPage) {
         List<Answer> answers = answerService.listByQuestionId(questionId, pageNo, numPerPage);
         List<AnswerDTO> answerDTOS = new ArrayList<>();
         answers.forEach(answer -> {

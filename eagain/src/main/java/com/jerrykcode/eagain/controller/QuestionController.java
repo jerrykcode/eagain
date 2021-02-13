@@ -1,5 +1,6 @@
 package com.jerrykcode.eagain.controller;
 
+import com.jerrykcode.eagain.dto.HomePageQuestionDTO;
 import com.jerrykcode.eagain.dto.QuestionDTO;
 import com.jerrykcode.eagain.dto.page.QuestionPage;
 import com.jerrykcode.eagain.model.Question;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 
 @RestController
 @RequestMapping("/questions")
@@ -35,6 +37,17 @@ public class QuestionController {
     @GetMapping("/query/{id}")
     public QuestionPage queryById(@PathVariable("id")Long id) {
         return questionService.getQuestionPage(id);
+    }
+
+    @GetMapping("/list")
+    public List<HomePageQuestionDTO> list(@RequestParam(value = "pageNo", required = false, defaultValue = "1")Integer pageNo,
+                                          @RequestParam(value = "numPerPage", required = false, defaultValue = "10")Integer numPerPage) {
+        return questionService.listHomePageQuestions(pageNo, numPerPage);
+    }
+
+    @GetMapping("/count/all")
+    public Long countAllQuestions() {
+        return questionService.countAllQuestions();
     }
 
 }

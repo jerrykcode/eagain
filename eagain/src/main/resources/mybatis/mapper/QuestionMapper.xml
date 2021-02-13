@@ -26,6 +26,14 @@
         parameterType="java.lang.Long">
         select * from question where id = #{id}
     </select>
+    <select id="list" resultType="com.jerrykcode.eagain.model.Question" resultMap="questionMap">
+        select * from question
+        order by gmt_modified desc
+        limit #{limit} offset #{offset}
+    </select>
+    <select id="countAll" resultType="java.lang.Long">
+        select count(*) from question;
+    </select>
 
     <update id="update" parameterType="com.jerrykcode.eagain.model.Question">
         <if test="id != null">

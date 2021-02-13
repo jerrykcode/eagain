@@ -6,7 +6,7 @@ import com.jerrykcode.eagain.mapper.QuestionMapper;
 import com.jerrykcode.eagain.model.Answer;
 import com.jerrykcode.eagain.service.AnswerService;
 import com.jerrykcode.eagain.service.likes.LikesCountService;
-import com.jerrykcode.eagain.service.views.ViewsCountService;
+import com.jerrykcode.eagain.service.views.ViewsIncrService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +23,7 @@ public class AnswerServiceImpl implements AnswerService {
     private QuestionMapper questionMapper;
 
     @Autowired
-    private ViewsCountService viewsCountService;
+    private ViewsIncrService viewsIncrService;
 
     @Autowired
     private LikesCountService likesCountService;
@@ -45,7 +45,7 @@ public class AnswerServiceImpl implements AnswerService {
         Integer offset = (pageNo - 1) * numPerPage;
         List<Answer> answers = answerMapper.listByQuestionId(questionId, numPerPage, offset);
         answers.forEach(answer -> {
-            answer.setViewsCount(viewsCountService.increaseViewsCount(DBModelEnum.DB_ANSWER, ""+answer.getId()).intValue())
+            answer.setViewsCount(viewsIncrService.increaseViewsCount(DBModelEnum.DB_ANSWER, ""+answer.getId()).intValue())
                     .setLikesCount(likesCountService.getLikesCount(DBModelEnum.DB_ANSWER, ""+answer.getId()).intValue());
         });
         return answers;
