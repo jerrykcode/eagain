@@ -31,7 +31,7 @@ eagain为后端spring boot项目
 ```
 create database eagain;
 use eagain
-``
+```
 运行resources/db目录下的schema.sql和data.sql脚本  
 
 4. 在idea中启动eagain
