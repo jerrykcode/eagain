@@ -6,6 +6,7 @@ import Login from '@/views/Login'
 import Register from '@/views/Register'
 import Ask from '@/views/Ask'
 import Question from '@/views/Question'
+import Answer from '@/views/Answer'
 import Notification from '@/views/Notification'
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
@@ -22,6 +23,7 @@ export default new Router({
     { path: '/register', name: 'Register', component: Register },
     { path: '/ask', name: 'Ask', component: Ask },
     { path: '/questions/:id', name: 'Question', component: Question},
+	{ path: '/answers/:id', name: 'Answer', component: Answer},
     { path: '/notifications', name : 'Notification', component: Notification}
   ]
 })

@@ -47,4 +47,12 @@ public class AnswerController {
         });
         return answerDTOS;
     }
+
+    @GetMapping("/query")
+    public AnswerDTO queryById(@RequestParam("answerId")Long answerId) {
+        Answer answer = answerService.queryById(answerId);
+        return new AnswerDTO()
+                .setAnswer(answer)
+                .setCreatorName(id2UsernameService.id2Username(answer.getCreatorId()));
+    }
 }
