@@ -22,12 +22,18 @@
                     <Button text size="small">{{focusesCount}}关注</Button> | 
                     <Button text size="small" @click="likeQuestion()"><Icon type="ios-heart-outline"/>{{likesCount}}喜欢</Button>   发布于 {{dateCreate}} 最后编辑于 {{dateModified}}  </span>              
                 <Divider />
-                <Button type="success" ghost @click="answerQuestion=true"><Icon type="ios-create-outline" size="20" /> 回答问题</Button>
+                <Button type="success" ghost @click="answerQuestion=true" v-show="haveDraft==false">
+                    <Icon type="ios-create-outline" size="20" /> 回答问题
+                </Button>
+                <Button type="success" ghost @click="answerQuestion=true" v-show="haveDraft">
+                    <Icon type="ios-create-outline" size="20" /> 继续回答
+                </Button>
                 <div class="markdownpro" v-show="answerQuestion">
                     <br>
                     <mavon-editor v-model="answerContent"/>
                     <br>
                     <span style="color:red;" v-show="answerContentEmpty">回答没有任何内容</span>
+                    <Button type="success" ghost style="float:right" @click="save()"><Icon type="ios-send-outline" size="20"/>保存草稿</Button>
                     <Button type="success" style="float:right" @click="answer()"><Icon type="ios-send-outline" size="20"/>提交回答</Button>
                     <br>                    
                 </div>
@@ -83,6 +89,7 @@ export default {
             likesCount: 0,
             focusesCount: 0,
             answerQuestion: false,
+            haveDraft: false,
             answerContent: '',
             answerContentEmpty: false,
             answers: [],            
@@ -109,7 +116,21 @@ export default {
             this.viewsCount = res.data.viewsCount;
             this.likesCount = res.data.likesCount;
             this.focusesCount = res.data.focusesCount;
-        });        
+        });
+        this.$http.get('/draft/queryAnswer', 
+            {params:{
+                'creatorId':this.userId,
+                'questionId':this.questionId
+            }},
+            {headers:{'token': localStorage.getItem('token')}})
+        .then(res=>{
+            alert('HAHA');
+            if (res.data != null) {
+                this.haveDraft = true;
+                this.answerContent = res.data.content;
+                console.log(res.data);
+            }
+        }); 
     },
     mounted() {
         this.getAnswers(1);
@@ -157,6 +178,19 @@ export default {
                     this.answerQuestion = false;
                     this.getAnswers(1);
                 })
+            }
+        },
+
+        save: function() {
+            if (!this.answerContentEmpty) {
+                this.$http.post('/draft/saveAnswer',
+                    {
+                        'creatorId':this.userId,
+                        'questionId':this.questionId,
+                        'content':this.answerContent
+                    }, 
+                    {headers:{'token': localStorage.getItem('token')}})
+                .then(res=>{});
             }
         },
 

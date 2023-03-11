@@ -5,13 +5,12 @@ import com.jerrykcode.eagain.model.Draft;
 import com.jerrykcode.eagain.request.SaveAnswerDraftRequest;
 import com.jerrykcode.eagain.service.DraftService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/draft")
 public class DraftController {
 
@@ -46,7 +45,8 @@ public class DraftController {
     @GetMapping("/queryAnswer")
     public DraftDTO queryByCreatorIdAndQuestionId(@RequestParam("creatorId") Long creatorId,
                                                @RequestParam("questionId") Long questionId) {
-        return draftService.queryByCreatorIdAndRelatedId(creatorId, questionId).toDTO();
+        Draft draft = draftService.queryByCreatorIdAndRelatedId(creatorId, questionId);
+        return draft == null ? null : draft.toDTO();
     }
 
     @GetMapping("/list")
