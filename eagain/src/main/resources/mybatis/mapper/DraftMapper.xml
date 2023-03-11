@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jerrykcode.eagain.mapper.DraftMapper">
+    <resultMap id="draftMap" type="com.jerrykcode.eagain.model.Draft">
+        <result column="draft_id" property="id" jdbcType="BIGINT"></result>
+        <result column="creator_id" property="creatorId" jdbcType="BIGINT"/>
+        <result column="related_id" property="relatedId" jdbcType="BIGINT"></result>
+        <result column="gmt_updated" property="gmtUpdated" jdbcType="BIGINT"></result>
+    </resultMap>
+
+    <insert id="create" parameterType="com.jerrykcode.eagain.model.Draft">
+        insert into draft(creator_id, type, related_id, content, gmt_updated)
+        values(#{creatorId}, #{type}, #{relatedId}, #{content}, #{gmtUpdated})
+    </insert>
+
+    <update id="update" parameterType="com.jerrykcode.eagain.model.Draft">
+        update draft set content = #{content}, gmt_updated = #{gmtUpdated}
+        where draft_id = #{id}
+    </update>
+
+    <select id="queryById" resultMap="draftMap">
+        select * from draft where draft_id = #{id}
+    </select>
+
+    <select id="queryByCreatorIdAndRelatedId" resultMap="draftMap">
+        select * from draft where creator_id = #{creatorId} and related_id = #{relatedId}
+    </select>
+
+    <select id="listByCreatorId" resultMap="draftMap">
+        select * from draft where creator_id = #{creatorId}
+    </select>
+</mapper>

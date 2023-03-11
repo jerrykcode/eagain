@@ -126,3 +126,17 @@ CREATE TABLE `notification` (
 );
 CREATE INDEX notification_sender_id_index on notification(sender_id);
 CREATE INDEX notification_receiver_id_index on notification(receiver_id);
+
+-- -----------------------------------
+-- 草稿表
+-- -----------------------------------
+DROP TABLE IF EXISTS `draft`;
+CREATE TABLE `draft` (
+    draft_id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    creator_id BIGINT NOT NULL,
+    type CHAR(1) NOT NULL,
+    related_id BIGINT,
+    content VARCHAR(1024) NOT NULL,
+    gmt_updated BIGINT
+);
+CREATE INDEX draft_creator_id_index on draft(creator_id);
