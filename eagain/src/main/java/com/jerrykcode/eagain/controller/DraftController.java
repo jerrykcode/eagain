@@ -55,4 +55,10 @@ public class DraftController {
         draftService.listByCreatorId(creatorId).forEach(draft -> {dtos.add(draft.toDTO());});
         return dtos;
     }
+
+    @DeleteMapping("/delete/{id}")
+    public void delete(@PathVariable("id") Long id) {
+        draftService.delete(id);
+    }
+
 }

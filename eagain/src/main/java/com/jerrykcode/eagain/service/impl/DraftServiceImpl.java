@@ -47,4 +47,9 @@ public class DraftServiceImpl implements DraftService {
     public List<Draft> listByCreatorId(Long creatorId) {
         return draftMapper.listByCreatorId(creatorId);
     }
+
+    @Override
+    public void delete(Long id) {
+        draftMapper.delete(id);
+    }
 }

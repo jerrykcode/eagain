@@ -14,4 +14,5 @@ public interface DraftService {
     public Draft queryById(Long id);
     public Draft queryByCreatorIdAndRelatedId(Long creatorId, Long relatedId);
     public List<Draft> listByCreatorId(Long creatorId);
+    public void delete(Long id);
 }

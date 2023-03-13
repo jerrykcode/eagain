@@ -90,6 +90,7 @@ export default {
             focusesCount: 0,
             answerQuestion: false,
             haveDraft: false,
+            draftId: -1,
             answerContent: '',
             answerContentEmpty: false,
             answers: [],            
@@ -166,6 +167,10 @@ export default {
                 }, {headers:{'token': localStorage.getItem('token')}}).then(res=>{
                     this.answerQuestion = false;
                     this.getAnswers(1);
+                    this.haveDraft = false;
+                    this.answerContent = '';
+                    this.answerContentEmpty = true;
+                    this.deleteDraft();
                 })
             }
         },
@@ -190,11 +195,17 @@ export default {
                         'questionId':this.questionId
                     },headers:{'token': localStorage.getItem('token')}})
             .then(res=>{
-                if (res.data != null) {
+                this.answerContent = res.data.content;
+                if (this.answerContent.length > 0) {
                     this.haveDraft = true;
-                    this.answerContent = res.data.content;
+                    this.draftId = res.data.id;
                 }
             });
+        },
+
+        deleteDraft: function() {
+            this.$http.delete('/draft/delete/' + this.draftId, 
+                {headers:{'token': localStorage.getItem('token')}});
         },
 
         getAnswers: function(pageNo) {

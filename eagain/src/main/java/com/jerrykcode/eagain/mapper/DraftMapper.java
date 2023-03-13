@@ -15,4 +15,5 @@ public interface DraftMapper {
     Draft queryById(Long id);
     Draft queryByCreatorIdAndRelatedId(Long creatorId, Long relatedId);
     List<Draft> listByCreatorId(Long creatorId);
+    void delete(Long id);
 }

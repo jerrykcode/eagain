@@ -31,4 +31,8 @@
     <select id="listByCreatorId" resultMap="draftMap">
         select * from draft where creator_id = #{creatorId}
     </select>
+
+    <delete id="delete">
+        delete from draft where draft_id = #{id}
+    </delete>
 </mapper>
