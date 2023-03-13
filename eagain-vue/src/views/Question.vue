@@ -117,20 +117,9 @@ export default {
             this.likesCount = res.data.likesCount;
             this.focusesCount = res.data.focusesCount;
         });
-        this.$http.get('/draft/queryAnswer', 
-            {params:{
-                'creatorId':this.userId,
-                'questionId':this.questionId
-            }},
-            {headers:{'token': localStorage.getItem('token')}})
-        .then(res=>{
-            alert('HAHA');
-            if (res.data != null) {
-                this.haveDraft = true;
-                this.answerContent = res.data.content;
-                console.log(res.data);
-            }
-        }); 
+        if (this.login) {
+            this.getDraft();
+        }
     },
     mounted() {
         this.getAnswers(1);
@@ -192,6 +181,20 @@ export default {
                     {headers:{'token': localStorage.getItem('token')}})
                 .then(res=>{});
             }
+        },
+
+        getDraft: function() {
+           this.$http.get('/draft/queryAnswer',
+                    {params:{
+                        'creatorId':this.userId,
+                        'questionId':this.questionId
+                    },headers:{'token': localStorage.getItem('token')}})
+            .then(res=>{
+                if (res.data != null) {
+                    this.haveDraft = true;
+                    this.answerContent = res.data.content;
+                }
+            });
         },
 
         getAnswers: function(pageNo) {
