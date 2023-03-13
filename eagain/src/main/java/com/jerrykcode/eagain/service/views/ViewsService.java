@@ -34,6 +34,16 @@ public class ViewsService {
         return viewsCountService.getViewsCount(dbModelEnum, id);
     }
 
+    // 无重复统计阅读量，按用户ID增加阅读数，每个用户只统计一次，使用redis的hyperloglog
+    public Long increaseViewsCountNoDup(DBModelEnum dbModelEnum, String id, Long userId) {
+        return viewsIncrService.increaseViewsCountNoDup(dbModelEnum, id, userId);
+    }
+
+    // 获取无重复阅读量（每个用户只统计一次）使用redis的hyperloglog
+    public Long getViewsCountNoDup(DBModelEnum dbModelEnum, String id) {
+        return viewsCountService.getViewsCountNoDup(dbModelEnum, id);
+    }
+
     public static String parseDBModelFromRedisHashKey(Object key) {
         String keyStr = (String) key;
         return keyStr.split(":")[0];
@@ -49,6 +59,10 @@ public class ViewsService {
             throw new IllegalArgumentException();
         }
         return dbModel.getName()+":"+id;
+    }
+
+    public static String id2RedisHyperloglog(DBModelEnum dbModelEnum, String id) {
+        return RedisConstants.VIEWS_HYPERLOGLOG + "-" + getRedisHashKey(dbModelEnum, id);
     }
 
     @Scheduled(cron = "${spring.time.cron.views}")

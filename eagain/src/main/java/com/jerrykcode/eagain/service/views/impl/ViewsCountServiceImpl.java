@@ -2,10 +2,7 @@ package com.jerrykcode.eagain.service.views.impl;
 
 import com.jerrykcode.eagain.enums.DBModelEnum;
 import com.jerrykcode.eagain.service.cache.CacheServiceTemplate;
-import com.jerrykcode.eagain.service.views.DBViewServiceFactory;
-import com.jerrykcode.eagain.service.views.DBViewsService;
-import com.jerrykcode.eagain.service.views.ViewsCountService;
-import com.jerrykcode.eagain.service.views.ViewsService;
+import com.jerrykcode.eagain.service.views.*;
 import com.jerrykcode.eagain.util.redis.impl.RedisConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -18,11 +15,19 @@ public class ViewsCountServiceImpl extends CacheServiceTemplate implements Views
     private RedisTemplate redisTemplate;
 
     @Autowired
+    private HyperloglogService hyperloglogService;
+
+    @Autowired
     private DBViewServiceFactory dbViewServiceFactory;
 
     @Override
     public Long getViewsCount(DBModelEnum dbModel, String id) {
         return Long.valueOf(""+get(ViewsService.getRedisHashKey(dbModel, id)));
+    }
+
+    @Override
+    public Long getViewsCountNoDup(DBModelEnum dbModelEnum, String id) {
+        return hyperloglogService.pfcount(ViewsService.id2RedisHyperloglog(dbModelEnum, id));
     }
 
     @Override

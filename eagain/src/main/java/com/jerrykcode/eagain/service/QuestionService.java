@@ -12,7 +12,7 @@ import java.util.List;
 public interface QuestionService {
     Long create(QuestionDTO questionDTO);
     Question queryById(Long questionId);
-    QuestionPage getQuestionPage(Long questionId);
+    QuestionPage getQuestionPage(Long questionId, Long userId);
     List<HomePageQuestionDTO> listHomePageQuestions(Integer pageNo, Integer numPerPage);
     Long countAllQuestions();
 }

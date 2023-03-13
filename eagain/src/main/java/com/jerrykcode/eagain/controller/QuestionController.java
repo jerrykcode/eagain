@@ -35,8 +35,8 @@ public class QuestionController {
     }
 
     @GetMapping("/query/{id}")
-    public QuestionPage queryById(@PathVariable("id")Long id) {
-        return questionService.getQuestionPage(id);
+    public QuestionPage queryById(@PathVariable("id")Long id, @RequestHeader("user-id") Long userId) {
+        return questionService.getQuestionPage(id, userId);
     }
 
     @GetMapping("/list")

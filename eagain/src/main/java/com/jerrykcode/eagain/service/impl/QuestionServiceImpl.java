@@ -51,7 +51,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public QuestionPage getQuestionPage(Long questionId) {
+    public QuestionPage getQuestionPage(Long questionId, Long userId) {
         Question question = questionMapper.queryById(questionId);
         return new QuestionPage()
                 .setCreatorName(id2UsernameService.id2Username(question.getCreatorId()))
@@ -60,7 +60,7 @@ public class QuestionServiceImpl implements QuestionService {
                 .setGmtCreate(question.getGmtCreate())
                 .setGmtModified(question.getGmtModified())
                 .setAnswersCount(question.getAnswersCount())
-                .setViewsCount(viewsService.increaseViewsCount(DBModelEnum.DB_QUESTION, "" + questionId).intValue())
+                .setViewsCount(viewsService.increaseViewsCountNoDup(DBModelEnum.DB_QUESTION, "" + questionId, userId).intValue())
                 .setLikesCount(likesCountService.getLikesCount(DBModelEnum.DB_QUESTION, "" + questionId).intValue())
                 .setFocusesCount(question.getFocusesCount())
                 .setTags(questionTagMapper.listByQuestionId(questionId));
@@ -81,7 +81,7 @@ public class QuestionServiceImpl implements QuestionService {
                     .setGmtCreate(question.getGmtCreate())
                     .setGmtModified(question.getGmtModified())
                     .setAnswersCount(question.getAnswersCount())
-                    .setViewsCount(viewsService.getViewsCount(DBModelEnum.DB_QUESTION, "" + question.getId()).intValue())
+                    .setViewsCount(viewsService.getViewsCountNoDup(DBModelEnum.DB_QUESTION, "" + question.getId()).intValue())
                     .setLikesCount(likesCountService.getLikesCount(DBModelEnum.DB_QUESTION, "" + question.getId()).intValue())
                     .setFocusesCount(question.getFocusesCount());
             homePageQuestionDTOS.add(homePageQuestionDTO);

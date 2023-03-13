@@ -2,10 +2,7 @@ package com.jerrykcode.eagain.service.views.impl;
 
 import com.jerrykcode.eagain.enums.DBModelEnum;
 import com.jerrykcode.eagain.service.cache.CacheServiceTemplate;
-import com.jerrykcode.eagain.service.views.DBViewServiceFactory;
-import com.jerrykcode.eagain.service.views.DBViewsService;
-import com.jerrykcode.eagain.service.views.ViewsIncrService;
-import com.jerrykcode.eagain.service.views.ViewsService;
+import com.jerrykcode.eagain.service.views.*;
 import com.jerrykcode.eagain.util.redis.impl.RedisConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +20,9 @@ public class ViewsIncrServiceImpl extends CacheServiceTemplate implements ViewsI
     private RedisTemplate redisTemplate;
 
     @Autowired
+    private HyperloglogService hyperloglogService;
+
+    @Autowired
     private DBViewServiceFactory dbViewServiceFactory;
 
     private static final long INVAILD_VALUE = -1;
@@ -30,6 +30,13 @@ public class ViewsIncrServiceImpl extends CacheServiceTemplate implements ViewsI
     @Override
     public Long increaseViewsCount(DBModelEnum dbModel, String id) {
         return (Long) get(ViewsService.getRedisHashKey(dbModel, id));
+    }
+
+    @Override
+    public Long increaseViewsCountNoDup(DBModelEnum dbModelEnum, String id, Long userId) {
+        String key = ViewsService.id2RedisHyperloglog(dbModelEnum, id);
+        hyperloglogService.pfadd(key, "" + userId);
+        return hyperloglogService.pfcount(key);
     }
 
     @Override

@@ -6,6 +6,7 @@ public class RedisConstants {
     public static final String ID_OF_USERNAME = "id_of_username:";
     public static final String USERNAME_OF_ID = "username_of_id:";
     public static final String VIEWS_HASH = "views_hash";
+    public static final String VIEWS_HYPERLOGLOG = "views_hyll";
     public static final String ANSWERS_HASH = "answers_hash:";
     public static final String NOTIFICATION_SET = "notification:";
 }

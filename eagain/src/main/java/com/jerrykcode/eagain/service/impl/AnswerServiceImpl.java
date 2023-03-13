@@ -41,11 +41,11 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public List<Answer> listByQuestionId(Long questionId, Integer pageNo, Integer numPerPage) {
+    public List<Answer> listByQuestionId(Long questionId, Integer pageNo, Integer numPerPage, Long currentUserId) {
         Integer offset = (pageNo - 1) * numPerPage;
         List<Answer> answers = answerMapper.listByQuestionId(questionId, numPerPage, offset);
         answers.forEach(answer -> {
-            answer.setViewsCount(viewsIncrService.increaseViewsCount(DBModelEnum.DB_ANSWER, ""+answer.getId()).intValue())
+            answer.setViewsCount(viewsIncrService.increaseViewsCountNoDup(DBModelEnum.DB_ANSWER, ""+answer.getId(), currentUserId).intValue())
                     .setLikesCount(likesCountService.getLikesCount(DBModelEnum.DB_ANSWER, ""+answer.getId()).intValue());
         });
         return answers;

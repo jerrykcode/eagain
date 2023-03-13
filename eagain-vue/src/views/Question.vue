@@ -77,7 +77,7 @@ export default {
             questionId: 0,
             login: false,
             username: null,
-            userId: 0,
+            userId: -1,
             creatorName: '',
             title: '',
             content: '',
@@ -106,7 +106,9 @@ export default {
             this.userId = jwtStr.id;
         }
         this.questionId = this.$route.params.id; 
-        this.$http.get('/questions/query/'+this.questionId).then(res=>{
+        this.$http.get('/questions/query/'+this.questionId,
+            {headers:{'user-id':this.userId}})
+        .then(res=>{
             this.creatorName = res.data.creatorName;
             this.title = res.data.title;
             this.content = res.data.content;
@@ -214,7 +216,7 @@ export default {
                     'questionId': this.questionId,
                     'pageNo': pageNo,
                     'numPerPage': this.numPerPage
-                }
+                }, headers: {'user-id' : this.userId}
             }).then(res=>{
                 this.answers = res.data;
             });            

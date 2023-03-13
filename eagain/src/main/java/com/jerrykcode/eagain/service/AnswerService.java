@@ -9,5 +9,5 @@ import java.util.List;
 public interface AnswerService {
     void create(Answer answer);
     Answer queryById(Long answerId);
-    List<Answer> listByQuestionId(Long questionId, Integer pageNo, Integer numPerPage);
+    List<Answer> listByQuestionId(Long questionId, Integer pageNo, Integer numPerPage, Long currentUserId);
 }
